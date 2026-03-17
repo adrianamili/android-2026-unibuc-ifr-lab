@@ -14,24 +14,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat.getString
+import com.unibucfmiifr2026.ui.screens.LoginScreen
 import com.unibucfmiifr2026.ui.theme.UniBucFMIIFR2026Theme
 
 class MainActivity : ComponentActivity() {
-
-	val name: String = "My Name"
-	var lastName: String = "My Name"
-
-	var lastName2: String? = null
-
-	val age : Int by lazy {
-		0
-	}
-
-	lateinit var surname: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -39,40 +30,16 @@ class MainActivity : ComponentActivity() {
 		setContent {
 			UniBucFMIIFR2026Theme {
 				Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-					Greeting(
-						name = "Android",
+//					Greeting(
+//						name = "Android",
+//						modifier = Modifier.padding(innerPadding)
+//					)
+					LoginScreen(
 						modifier = Modifier.padding(innerPadding)
 					)
 				}
 			}
 		}
-
-		surname.isEmpty()
-		surname = "My Surname"
-
-		//name = "Other name"
-		lastName = "Other name"
-		lastName.isEmpty()
-
-		Log.e("TAG", "$age")
-
-		Log.e("TAG", "${lastName2?.length}")
-		lastName2 = "Other name"
-		lastName2?.isEmpty()
-
-		if(lastName2 == null) {
-			surname = "Something else"
-		} else {
-			surname = lastName2!!
-		}
-
-		surname = lastName2?.let {
-			"$it blabla"
-		} ?: "Something else"
-
-
-		surname = lastName2 ?: "Something else"
-
 		Log.e("TAG", "onCreate:")
 	}
 

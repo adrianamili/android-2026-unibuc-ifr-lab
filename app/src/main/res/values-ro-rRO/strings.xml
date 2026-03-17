@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_world">Salut lume!</string>
+    <string name="login">Autentificare</string>
+    <string name="email">Email</string>
+    <string name="password">Parola</string>
+    <string name="welcome">Bun venit!</string>
 </resources>
