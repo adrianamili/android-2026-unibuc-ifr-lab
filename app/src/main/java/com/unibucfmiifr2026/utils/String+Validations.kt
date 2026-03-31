@@ -6,7 +6,7 @@ import org.intellij.lang.annotations.Pattern
 fun String.isValidEmail() =
      isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
-fun String.isValidPassword() = length >= 4
+fun String.isValidPassword() = length >= 6
 
 fun String.isValidName() = length >= 4
 

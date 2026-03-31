@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +28,7 @@ import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +37,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.unibucfmiifr2026.BuildConfig
 import com.unibucfmiifr2026.R
 import com.unibucfmiifr2026.utils.isValidEmail
 import com.unibucfmiifr2026.utils.isValidPassword
@@ -43,8 +46,10 @@ import com.unibucfmiifr2026.utils.isValidPassword
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    onLoginClick: () -> Unit = {},
-    onRegisterClick: () -> Unit = {}
+    onLoginClick: (email: String, password: String) -> Unit = {_,_->},
+    onRegisterClick: () -> Unit = {},
+    isLoading: Boolean = false,
+    authError: String? = null
 ) {
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
@@ -56,7 +61,10 @@ fun LoginScreen(
     val invalidEmailError = stringResource(R.string.email_error)
     val invalidPasswordError = stringResource(R.string.password_error)
 
-
+    if(BuildConfig.DEBUG){
+        email="test@test.com"
+        password="12345678"
+    }
 
     Column(
         modifier = Modifier
@@ -159,13 +167,25 @@ fun LoginScreen(
                     valid = false
                 }
                 if (valid) {
-                    onLoginClick()
+                    onLoginClick(email, password)
                 }
-            }
+            },
+            enabled = !isLoading
 
         ) {
+            when (isLoading) {
+                false -> Text(stringResource(R.string.login))
+                true -> CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp
+                )
+            }
+        }
+        authError?.let { error ->
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                stringResource(R.string.login)
+                text = error,
+                color = MaterialTheme.colorScheme.error
             )
         }
         Spacer(modifier = Modifier.height(16.dp))

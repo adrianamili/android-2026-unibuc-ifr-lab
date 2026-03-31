@@ -15,4 +15,5 @@
     <string name="password_error" >Introdu o parola valida!</string>
     <string name="name_error" >Introdu un nume valid!</string>
     <string name="matching_password_error" >Parolele nu se potrivesc!</string>
+    <string name="logout">Deconectare</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.platform.LocalContext
@@ -46,8 +48,10 @@ import com.unibucfmiifr2026.utils.isValidPassword
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
-    onRegisterClick: () -> Unit = {},
-    onLoginClick: () -> Unit = {}
+    onRegisterClick: (email: String, password: String) -> Unit = { _, _ -> },
+    onLoginClick: () -> Unit = {},
+    isLoading: Boolean = false,
+    authError: String? = null
 ) {
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
@@ -224,7 +228,7 @@ fun RegisterScreen(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
-                    isError = matchingPasswordError != null,
+            isError = matchingPasswordError != null,
             supportingText = matchingPasswordError?.let {
                 {
                     Text(
@@ -256,13 +260,25 @@ fun RegisterScreen(
                     valid = false
                 }
                 if (valid) {
-                    onRegisterClick()
+                    onRegisterClick(email, password)
                 }
-            }
+            },
+            enabled = !isLoading
 
         ) {
+            when (isLoading) {
+                false -> Text(stringResource(R.string.register))
+                true -> CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp
+                )
+            }
+        }
+        authError?.let { error ->
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                stringResource(R.string.register)
+                text = error,
+                color = MaterialTheme.colorScheme.error
             )
         }
         Spacer(modifier = Modifier.height(16.dp))

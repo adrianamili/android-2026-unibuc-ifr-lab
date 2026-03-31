@@ -1,29 +1,39 @@
 package com.unibucfmiifr2026.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.unibucfmiifr2026.ui.screens.HomeScreen
 import com.unibucfmiifr2026.ui.screens.LoginScreen
 import com.unibucfmiifr2026.ui.screens.RegisterScreen
+import com.unibucfmiifr2026.viewmodels.AuthViewModel
 
 @Composable
-fun AuthNavigation() {
+fun AuthNavigation(authViewModel: AuthViewModel = viewModel()) {
     val navController = rememberNavController()
+    val authState by authViewModel.authState.collectAsState()
+    val navigateToHome = { navController.navigate("home") }
+    val startDestination = if (authViewModel.isLoggedIn) "home" else "login"
 
     NavHost(
         navController,
-        startDestination = "login"
+        startDestination = startDestination
     ) {
         composable("login") {
             LoginScreen(
                 onRegisterClick = {
                     navController.navigate("register")
                 },
-                onLoginClick = {
-                    navController.navigate("home")
-                }
+                onLoginClick = { email, password ->
+                    authViewModel.login(email, password, onSuccess = navigateToHome)
+//                    navController.navigate("home")
+                },
+                isLoading = authState.isLoading,
+                authError = authState.error
             )
         }
         composable("register") {
@@ -31,14 +41,17 @@ fun AuthNavigation() {
                 onLoginClick = {
                     navController.popBackStack()
                 },
-                onRegisterClick = {
-                    navController.navigate("home")
-                }
+                onRegisterClick = { email, password ->
+                    authViewModel.register(email, password, onSuccess = navigateToHome)
+//                    navController.navigate("home")
+                },
+                isLoading = authState.isLoading,
+                authError = authState.error
             )
 
         }
         composable("home") {
-            HomeScreen()
+            HomeScreen(logout = authViewModel::logout)
         }
     }
 }

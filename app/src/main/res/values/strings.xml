@@ -15,7 +15,7 @@
     <string name="password_error" >Enter a valid password!</string>
     <string name="name_error" >Enter a valid name!</string>
     <string name="matching_password_error" >Passwords don\'t match!</string>
-
+    <string name="logout">Logout</string>
 
 
 </resources>
