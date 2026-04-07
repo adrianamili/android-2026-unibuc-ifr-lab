@@ -16,4 +16,11 @@
     <string name="name_error" >Introdu un nume valid!</string>
     <string name="matching_password_error" >Parolele nu se potrivesc!</string>
     <string name="logout">Deconectare</string>
+    <string name="first_name">Prenume</string>
+    <string name="last_name">Nume</string>
+    <string name="invalid_last_name">Nume invalid</string>
+    <string name="invalid_first_name">Prenume invalid</string>
+    <string name="add_user_button">Adauga utilizator</string>
+
+
 </resources>

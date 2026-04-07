@@ -16,6 +16,11 @@
     <string name="name_error" >Enter a valid name!</string>
     <string name="matching_password_error" >Passwords don\'t match!</string>
     <string name="logout">Logout</string>
+    <string name="first_name">First name</string>
+    <string name="invalid_first_name">Invalid first name</string>
+    <string name="last_name">Last name</string>
+    <string name="invalid_last_name">Invalid last name</string>
+    <string name="add_user_button">Add user</string>
 
 
 </resources>
